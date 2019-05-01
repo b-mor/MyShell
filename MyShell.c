@@ -27,7 +27,7 @@ DONOT change the existing function definitions. You can add functions, if necess
 */
 void validateMemoryAllocation(char* pointer)
 {
-    if (pointer != NULL)
+    if (pointer == NULL)
     {
         printf("%s", "Fatal Error: Failed to allocate memory to save command input. Exiting...\n");
         exit(0);
@@ -57,6 +57,7 @@ char** parse(void)
 
     /* Save the entire line of user input. */
     rawInput = malloc(sizeof(char) * MAX_SIZE);
+    printf("here...");
     validateMemoryAllocation(rawInput);
     fgets(rawInput, MAX_SIZE, stdin);
     inputDup = strdup(rawInput); /* Duplicate the string for modification. */
@@ -100,6 +101,7 @@ int main(int argc, char **argv)
     {
         printf("%s", PROMPT);
         input = malloc(sizeof(char) * MAX_SIZE);
+        printf("Or here?");
         validateMemoryAllocation(input);
 
         /*
