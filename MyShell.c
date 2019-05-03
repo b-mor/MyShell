@@ -80,7 +80,7 @@ char** parse(void)
     }
 
     /* Create array to hold individual command arguments. */
-    char* tokenArray[argCount];
+    char** tokenArray = malloc(sizeof(char*) * argCount);
 
     /* Second loop: save tokens as arugments in tokenArray. */
     for (i = 0; i < argCount; i++)
@@ -119,8 +119,6 @@ int main(int argc, char **argv)
         input = parse();        // Get input.
         loopFlag = execute(input);   // Execute input.
     }
-
-    free(input);
 
     return EXIT_SUCCESS;
 }
