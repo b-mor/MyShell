@@ -43,7 +43,6 @@ void validateMemoryAllocation(char* pointer)
  */
 int execute(char **args)
 {
-    printf("%s\n", args[0]);
     if (strcmp(args[0], "exit") == 0) // Check for exit command.
     {
         printf("Exit received. Terminating MyShell...\n");
@@ -64,7 +63,7 @@ int execute(char **args)
 char** parse(void)
 {
     char *rawInput, *inputDup, *token;
-    int validCheck, argCount, i;
+    int validCheck, argCount, i, newLineLocation;
 
     /* Save the entire line of user input. */
     rawInput = malloc(sizeof(char) * MAX_SIZE);
@@ -88,6 +87,12 @@ char** parse(void)
         token = strsep(&rawInput, " ");
         tokenArray[i] = token;
     }
+
+    /**
+      Before returning the arguments, trim the dangling new line
+      character at the end of the last argument.
+    */
+    tokenArray[argCount - 1] = strtok(tokenArray[argCount - 1], "\n");
 
     return tokenArray;
 
