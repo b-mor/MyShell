@@ -12,6 +12,7 @@ DONOT change the existing function definitions. You can add functions, if necess
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #define PROMPT "MyShell> "
 #define MAX_SIZE 256
@@ -42,7 +43,17 @@ void validateMemoryAllocation(char* pointer)
  */
 int execute(char **args)
 {
+    printf("%s\n", args[0]);
+    if (strcmp(args[0], "exit") == 0) // Check for exit command.
+    {
+        printf("Exit received. Terminating MyShell...\n");
+        return 1;   // Return to main with exit value to terminate the program.
+    } else  // Not exit command, proceed attempting to execute.
+    {
 
+    }
+
+    return 0; // Return 0 and continue MyShell.
 }
 
 
@@ -57,7 +68,6 @@ char** parse(void)
 
     /* Save the entire line of user input. */
     rawInput = malloc(sizeof(char) * MAX_SIZE);
-    printf("here...");
     validateMemoryAllocation(rawInput);
     fgets(rawInput, MAX_SIZE, stdin);
     inputDup = strdup(rawInput); /* Duplicate the string for modification. */
@@ -76,9 +86,10 @@ char** parse(void)
     for (i = 0; i < argCount; i++)
     {
         token = strsep(&rawInput, " ");
-            printf("%s\n", token);  // TEST LINE DELETE THIS.
         tokenArray[i] = token;
     }
+
+    return tokenArray;
 
 }
 
@@ -93,25 +104,13 @@ char** parse(void)
 int main(int argc, char **argv)
 {
     int loopFlag = 0;
-    int exitCheck;
-    char *input;
 
     /* Loop to continue prompting for user input. Exits with proper command or fatal failure. */
     while (loopFlag == 0)
     {
         printf("%s", PROMPT);
-        input = malloc(sizeof(char) * MAX_SIZE);
-        printf("Or here?");
-        validateMemoryAllocation(input);
-
-        /*
-          Successfully allocated memory for user input. Call parse() to
-          tokenize and return user commands.
-        */
         char** test = parse();
-        loopFlag = 1;
-
-
+        loopFlag = execute(test);
     }
 
 
