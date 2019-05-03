@@ -64,7 +64,7 @@ char** parse(void)
 {
     char *rawInput, *inputDup, *token;
     int validCheck, argCount, i;
-	
+
     /* Save the entire line of user input. */
     rawInput = malloc(sizeof(char) * MAX_SIZE);
     validateMemoryAllocation(rawInput);
