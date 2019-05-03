@@ -109,13 +109,14 @@ char** parse(void)
 int main(int argc, char **argv)
 {
     int loopFlag = 0;
+    char** input;
 
     /* Loop to continue prompting for user input. Exits with proper command or fatal failure. */
     while (loopFlag == 0)
     {
-        printf("%s", PROMPT);
-        char** test = parse();
-        loopFlag = execute(test);
+        printf("%s", PROMPT);   // Display the prompt to the user.
+        input = parse();        // Get input.
+        loopFlag = execute(input);   // Execute input.
     }
 
 
