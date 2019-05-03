@@ -109,7 +109,7 @@ char** parse(void)
 int main(int argc, char **argv)
 {
     int loopFlag = 0;
-    char** input;
+    char** input = malloc(sizeof(char*));
 
     /* Loop to continue prompting for user input. Exits with proper command or fatal failure. */
     while (loopFlag == 0)
@@ -119,6 +119,7 @@ int main(int argc, char **argv)
         loopFlag = execute(input);   // Execute input.
     }
 
+    free(input);
 
     return EXIT_SUCCESS;
 }
