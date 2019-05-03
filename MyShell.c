@@ -63,12 +63,13 @@ int execute(char **args)
 char** parse(void)
 {
     char *rawInput, *inputDup, *token;
-    int validCheck, argCount, i, newLineLocation;
-
+    int validCheck, argCount, i;
+	
     /* Save the entire line of user input. */
     rawInput = malloc(sizeof(char) * MAX_SIZE);
     validateMemoryAllocation(rawInput);
-    fgets(rawInput, MAX_SIZE, stdin);
+    fgets(rawInput, MAX_SIZE + 100, stdin);
+	printf("Received input successfully.");
     inputDup = strdup(rawInput); /* Duplicate the string for modification. */
 
     /* First loop: Count number of total arguments in user input. */
