@@ -13,6 +13,7 @@ DONOT change the existing function definitions. You can add functions, if necess
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/types.h>
 
 #define PROMPT "MyShell> "
 #define MAX_SIZE 256
@@ -46,13 +47,20 @@ int execute(char **args)
         printf("Exit received. Terminating MyShell...\n");
         return 1;   // Return to main with exit value to terminate the program.
     } else {        // Not exit command, proceed attempting to execute.
-        //int processId = fork(); // Start new process.
-        //if (processId == 0) // If true, we are a child process.
+        pid_t parentId = getppid();
+        pid_t processId = fork(); // Start new process.
+        if (processId == 0) // If true, we are a child process.
         {
+            execvp(args[0], args);
+            // Below only executes if execvp failed.
+            printf("Invalid command.\n");
+
+        } else { // We go to this branch if we are the parent process.
+            // Wait for child process to finish.
+            int waitStatus;
+            waitpid(processId, &waitStatus, 0);
 
         }
-
-
 
     }
 
