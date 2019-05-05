@@ -31,19 +31,13 @@ TODO:
 
 Task List:
 	- Continually display "MyShell> " and await user input
-	- Save user input 
+	- Save user input
 	- Feed input to the OS
 
 Sequence:
 
-	1. Print prompt.
-	2. Wait for user input.
+	1. Print prompt. XXX
+	2. Wait for user input. XXX
 	3. Accept user input.
 	4. Evaluate input.
 	5. Execute input.
-
-
-
-
-
-

@@ -16,9 +16,6 @@ DONOT change the existing function definitions. You can add functions, if necess
 
 #define PROMPT "MyShell> "
 #define MAX_SIZE 256
-#define EXIT_CMD "exit"
-
-
 
 /**
   @brief Takes a pointer as an argument and checks whether or not it is NULL
@@ -69,7 +66,6 @@ char** parse(void)
     rawInput = malloc(sizeof(char) * MAX_SIZE);
     validateMemoryAllocation(rawInput);
     fgets(rawInput, MAX_SIZE + 100, stdin);
-	printf("Received input successfully.");
     inputDup = strdup(rawInput); /* Duplicate the string for modification. */
 
     /* First loop: Count number of total arguments in user input. */
