@@ -40,12 +40,19 @@ void validateMemoryAllocation(char* pointer)
  */
 int execute(char **args)
 {
+
     if (strcmp(args[0], "exit") == 0) // Check for exit command.
     {
         printf("Exit received. Terminating MyShell...\n");
         return 1;   // Return to main with exit value to terminate the program.
-    } else  // Not exit command, proceed attempting to execute.
-    {
+    } else {        // Not exit command, proceed attempting to execute.
+        //int processId = fork(); // Start new process.
+        //if (processId == 0) // If true, we are a child process.
+        {
+
+        }
+
+
 
     }
 
@@ -74,9 +81,14 @@ char** parse(void)
     {
         argCount++;
     }
+    free(inputDup);
 
-    /* Create array to hold individual command arguments. */
-    char** tokenArray = malloc(sizeof(char*) * argCount);
+    /**
+      Create array to hold individual command arguments. We add one
+      to the size to insert a NULL value at the end of our array,
+      as required to use execvp later.
+    */
+    char** tokenArray = malloc(sizeof(char*) * argCount + 1);
 
     /* Second loop: save tokens as arugments in tokenArray. */
     for (i = 0; i < argCount; i++)
@@ -87,12 +99,13 @@ char** parse(void)
 
     /**
       Before returning the arguments, trim the dangling new line
-      character at the end of the last argument.
+      character at the end of the last given argument and set the last
+      index of our tokenArray to NULL.
     */
     tokenArray[argCount - 1] = strtok(tokenArray[argCount - 1], "\n");
+    tokenArray[argCount] = NULL;
 
     return tokenArray;
-
 }
 
 
