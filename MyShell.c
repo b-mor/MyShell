@@ -40,7 +40,6 @@ void validateMemoryAllocation(char* pointer)
   @return returns 1, to continue execution and 0 to terminate the MyShell prompt.
  */
 int execute(char **args)
-
 {
     if (args[0] == NULL) // If user input is empty, do nothing.
     {
@@ -49,7 +48,7 @@ int execute(char **args)
 
     if (strcmp(args[0], "exit") == 0) // Check for exit command.
     {
-        printf("Exit received. Terminating MyShell...\n");
+        printf("Terminating MyShell...\n");
         return 1;   // Return to main with exit value to terminate the program.
     } else {        // Not exit command, proceed attempting to execute.
         pid_t parentId = getppid();
@@ -58,7 +57,7 @@ int execute(char **args)
         {
             execvp(args[0], args);
             // Below only executes if execvp failed.
-            printf("Invalid command.\n");
+            printf("Error: No such file or directory.\n");
             exit(0); // Kill this process.
 
         } else { // We go to this branch if we are the parent process.
@@ -88,6 +87,7 @@ char** parse(void)
     validateMemoryAllocation(rawInput);
     fgets(rawInput, MAX_SIZE + 100, stdin);
     inputDup = strdup(rawInput); /* Duplicate the string for modification. */
+    validateMemoryAllocation(inputDup);
 
     /* First loop: Count number of total arguments in user input. */
     argCount = 0;
@@ -114,7 +114,7 @@ char** parse(void)
     /**
       Before returning the arguments, trim the dangling new line
       character at the end of the last given argument and set the last
-      index of our tokenArray to NULL.
+      index of our tokenArray to NULL for use in execvp.
     */
     tokenArray[argCount - 1] = strtok(tokenArray[argCount - 1], "\n");
     tokenArray[argCount] = NULL;
