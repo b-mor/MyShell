@@ -40,7 +40,12 @@ void validateMemoryAllocation(char* pointer)
   @return returns 1, to continue execution and 0 to terminate the MyShell prompt.
  */
 int execute(char **args)
+
 {
+    if (args[0] == NULL) // If user input is empty, do nothing.
+    {
+        return 0;
+    }
 
     if (strcmp(args[0], "exit") == 0) // Check for exit command.
     {
@@ -54,6 +59,7 @@ int execute(char **args)
             execvp(args[0], args);
             // Below only executes if execvp failed.
             printf("Invalid command.\n");
+            exit(0); // Kill this process.
 
         } else { // We go to this branch if we are the parent process.
             // Wait for child process to finish.
