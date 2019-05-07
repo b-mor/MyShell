@@ -41,15 +41,15 @@ void validateMemoryAllocation(char* pointer)
  */
 int execute(char **args)
 {
+    int returnVal;
+
     if (args[0] == NULL) // If user input is empty, do nothing.
     {
-        return 0;
-    }
-
-    if (strcmp(args[0], "exit") == 0) // Check for exit command.
+        returnVal = 0;
+    } else if (strcmp(args[0], "exit") == 0) // Check for exit command.
     {
         printf("Terminating MyShell...\n");
-        return 1;   // Return to main with exit value to terminate the program.
+        returnVal = 1;   // Return to main with exit value to terminate the program.
     } else {        // Not exit command, proceed attempting to execute.
         pid_t parentId = getppid();
         pid_t processId = fork(); // Start new process.
@@ -58,18 +58,18 @@ int execute(char **args)
             execvp(args[0], args);
             // Below only executes if execvp failed.
             printf("Error: No such file or directory.\n");
-            exit(0); // Kill this process.
+            returnVal = 1;
 
         } else { // We go to this branch if we are the parent process.
             // Wait for child process to finish.
             int waitStatus;
             waitpid(processId, &waitStatus, 0);
-
+            returnVal = 0;
         }
 
     }
 
-    return 0; // Return 0 and continue MyShell.
+    return returnVal; // Return 0 and continue MyShell.
 }
 
 
